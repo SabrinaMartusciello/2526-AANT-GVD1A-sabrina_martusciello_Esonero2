@@ -3,8 +3,8 @@ using UnityEngine;
 public class BoatMovement : MonoBehaviour
 {
     [Header("Velocità")]
-    public float moveSpeed = 10f;
-    public float turnSpeed = 45f;
+    public float moveSpeed = 5f;
+    public float turnSpeed = 60f;
 
     [Header("Effetto onde")]
     public float waveHeight = 0.15f;
@@ -15,46 +15,33 @@ public class BoatMovement : MonoBehaviour
 
     void Start()
     {
-        // Prende il riferimento al Rigidbody
         _rb = GetComponent<Rigidbody>();
         _startY = transform.position.y;
+
+        // Blocca la rotazione su X e Z così non si impenna
+        _rb.constraints = RigidbodyConstraints.FreezeRotationX
+                        | RigidbodyConstraints.FreezeRotationZ;
     }
 
     void FixedUpdate()
     {
-        // FixedUpdate è il posto giusto per la fisica
-
         // --- MOVIMENTO AVANTI / INDIETRO ---
-        // Input.GetAxis("Vertical") restituisce:
-        //   +1 quando premi W o freccia Su
-        //   -1 quando premi S o freccia Giù
         float moveInput = Input.GetAxis("Vertical");
+        Vector3 targetVelocity = transform.forward * moveInput * moveSpeed;
 
-        Vector3 forwardForce = transform.forward
-                               * moveInput
-                               * moveSpeed;
+        // Mantieni la velocità Y attuale (gravità)
+        targetVelocity.y = _rb.linearVelocity.y;
 
-        _rb.AddForce(forwardForce, ForceMode.Acceleration);
+        // Imposta direttamente la velocità (no accumulo di forza)
+        _rb.linearVelocity = targetVelocity;
 
         // --- ROTAZIONE SINISTRA / DESTRA ---
-        // Input.GetAxis("Horizontal") restituisce:
-        //   +1 quando premi D o freccia Destra
-        //   -1 quando premi A o freccia Sinistra
         float turnInput = Input.GetAxis("Horizontal");
-
-        // Ruota solo se la barca si sta muovendo
-        if (Mathf.Abs(moveInput) > 0.1f)
-        {
-            float turn = turnInput
-                         * turnSpeed
-                         * Time.fixedDeltaTime;
-
-            Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-            _rb.MoveRotation(_rb.rotation * turnRotation);
-        }
+        float turn = turnInput * turnSpeed * Time.fixedDeltaTime;
+        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+        _rb.MoveRotation(_rb.rotation * turnRotation);
 
         // --- EFFETTO ONDE ---
-        // Fa oscillare dolcemente la barca sull'asse Y
         float wave = Mathf.Sin(Time.time * waveFrequency) * waveHeight;
         Vector3 pos = _rb.position;
         pos.y = _startY + wave;
