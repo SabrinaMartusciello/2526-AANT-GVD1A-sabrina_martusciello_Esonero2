@@ -4,5 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Project/01.MainMenu/Scenes/MainMenu.unity
+    guid: 13ec0afa9ab45e04192e8c3bcdc5fbe7
+  - enabled: 1
+    path: Assets/_Project/02.Level1/Scenes/Charon_Game.unity
+    guid: cde4e1e6888f2244e9caa3630d027714
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
