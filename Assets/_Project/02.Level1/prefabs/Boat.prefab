@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1642145097436657272}
+  - component: {fileID: 5235022204318541479}
+  - component: {fileID: 2955975324668415060}
+  - component: {fileID: 807133296082967019}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -30,8 +33,131 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6578243307010066440}
+  - {fileID: 4702357409168006628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &5235022204318541479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301359620491837459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28cbf3f29f30b4ad697608e656870d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveAction: {fileID: -1680190386980627800, guid: 76a6831e1de3f1c4a975cbd526388182,
+    type: 3}
+  brakeAction: {fileID: 0}
+  driftAction: {fileID: 0}
+  resetAction: {fileID: 0}
+  OnResetRequested:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!54 &2955975324668415060
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301359620491837459}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &807133296082967019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301359620491837459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78a79f6dbad74586b0ed8b10f266421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 22
+  acceleration: 14
+  deceleration: 10
+  reverseSpeed: 6
+  brakeStrength: 18
+  turnRate: 110
+  turnAtRest: 0.2
+  driftFactor: 0.92
+  driftFactorHeld: 0.55
+  driftMinSpeed: 4
+  driftMinSteer: 0.2
+  driftSteerBoost: 1.4
+  driftVisual: {fileID: 0}
+  driftVisualYawDegrees: 25
+  driftVisualLerpSpeed: 8
+  gravity: 30
+  airControl: 0.3
+  groundCheckDistance: 0.6
+  groundCheckOrigin: {fileID: 4702357409168006628}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  impactThreshold: 5
+  OnGroundedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpeedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnImpact:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &5995428481549017262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4702357409168006628}
+  m_Layer: 0
+  m_Name: ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4702357409168006628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995428481549017262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.314, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1642145097436657272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9082084264776313488
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +465,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
