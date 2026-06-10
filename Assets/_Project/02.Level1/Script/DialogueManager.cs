@@ -34,6 +34,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(string name, string[] lines)
     {
+        if (dialoguePanel == null) { Debug.LogError("DialoguePanel mancante!"); return; }
+        if (lines.Length == 0) { Debug.LogError("Nessuna battuta inserita!"); return; }
+
         currentLines = lines;
         currentIndex = 0;
         npcNameText.text = name;
@@ -54,26 +57,20 @@ public class DialogueManager : MonoBehaviour
         currentIndex++;
 
         if (currentIndex < currentLines.Length)
-        {
             StartCoroutine(TypeLine(currentLines[currentIndex]));
-        }
         else
-        {
             CloseDialogue();
-        }
     }
 
     IEnumerator TypeLine(string line)
     {
         isTyping = true;
         dialogueText.text = "";
-
         foreach (char c in line)
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(0.04f);
         }
-
         isTyping = false;
     }
 
